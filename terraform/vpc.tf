@@ -40,21 +40,18 @@ module "second-vpc" {
   }
 }
 
-# Requester's side of the connection.
-resource "aws_vpc_peering_connection" "peer" {
-  provider = "aws.primary"
-  vpc_id      = "${module.first-vpc.vpc_id}"
-  peer_vpc_id = "${module.second-vpc.vpc_id}"
-  auto_accept = false
+# VPC Peering
 
-  tags = {
-    Side = "Requester"
-  }
+resource "aws_vpc_peering_connection" "peer" {
+  provider    = "aws.primary"
+  peer_vpc_id = "${module.second-vpc.vpc_id}"
+  vpc_id      = "${module.first-vpc.vpc_id}"
+  peer_region = "${var.second-region}"
 }
 
 # Accepter's side of the connection.
 resource "aws_vpc_peering_connection_accepter" "peer" {
-  provider = "aws.secondary"
+  provider                  = "aws.secondary"
   vpc_peering_connection_id = "${aws_vpc_peering_connection.peer.id}"
   auto_accept               = true
 
@@ -63,24 +60,47 @@ resource "aws_vpc_peering_connection_accepter" "peer" {
   }
 }
 
-resource "aws_vpc_peering_connection_options" "requester" {
+## Creation of the routing between these VPCs
+/*
+# Declare the data source
+data "aws_vpc_peering_connection" "pcx" {
+  provider        = "aws.primary"
+  vpc_id          = "${module.first-vpc.vpc_id}"
+  peer_cidr_block = "${var.second_cidr}"
+}
+
+# Create a route table
+resource "aws_route_table" "route-table" {
   provider = "aws.primary"
-
-  # As options can't be set until the connection has been accepted
-  # create an explicit dependency on the accepter.
-  vpc_peering_connection_id = "${aws_vpc_peering_connection_accepter.peer.id}"
-
-  requester {
-    allow_remote_vpc_dns_resolution = true
-  }
+  vpc_id   = "${module.first-vpc.vpc_id}"
 }
 
-resource "aws_vpc_peering_connection_options" "accepter" {
+# Create a route
+resource "aws_route" "route" {
+  provider                  = "aws.primary"
+  route_table_id            = "${aws_route_table.route-table.id}"
+  destination_cidr_block    = "${data.aws_vpc_peering_connection.pcx.peer_cidr_block}"
+  vpc_peering_connection_id = "${data.aws_vpc_peering_connection.pcx.id}"
+}
+
+# Declare the data source
+data "aws_vpc_peering_connection" "pcx-second" {
+  provider        = "aws.secondary"
+  vpc_id          = "${module.second-vpc.vpc_id}"
+  peer_cidr_block = "${var.first_cidr}"
+}
+
+# Create a route table
+resource "aws_route_table" "route-table-second" {
   provider = "aws.secondary"
-
-  vpc_peering_connection_id = "${aws_vpc_peering_connection_accepter.peer.id}"
-
-  accepter {
-    allow_remote_vpc_dns_resolution = true
-  }
+  vpc_id   = "${module.second-vpc.vpc_id}"
 }
+
+# Create a route
+resource "aws_route" "route-second" {
+  provider                  = "aws.secondary"
+  route_table_id            = "${aws_route_table.route-table-second.id}"
+  destination_cidr_block    = "${data.aws_vpc_peering_connection.pcx-second.peer_cidr_block}"
+  vpc_peering_connection_id = "${data.aws_vpc_peering_connection.pcx-second.id}"
+}
+*/
