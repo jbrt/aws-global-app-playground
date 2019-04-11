@@ -61,7 +61,7 @@ resource "aws_vpc_peering_connection_accepter" "peer" {
 }
 
 ## Creation of the routing between these VPCs
-/*
+
 # Declare the data source
 data "aws_vpc_peering_connection" "pcx" {
   provider        = "aws.primary"
@@ -69,38 +69,28 @@ data "aws_vpc_peering_connection" "pcx" {
   peer_cidr_block = "${var.second_cidr}"
 }
 
-# Create a route table
+# Create a route table & route VPC A -> VPC B
 resource "aws_route_table" "route-table" {
   provider = "aws.primary"
   vpc_id   = "${module.first-vpc.vpc_id}"
 }
 
-# Create a route
 resource "aws_route" "route" {
   provider                  = "aws.primary"
   route_table_id            = "${aws_route_table.route-table.id}"
-  destination_cidr_block    = "${data.aws_vpc_peering_connection.pcx.peer_cidr_block}"
+  destination_cidr_block    = "${var.second_cidr}"
   vpc_peering_connection_id = "${data.aws_vpc_peering_connection.pcx.id}"
 }
 
-# Declare the data source
-data "aws_vpc_peering_connection" "pcx-second" {
-  provider        = "aws.secondary"
-  vpc_id          = "${module.second-vpc.vpc_id}"
-  peer_cidr_block = "${var.first_cidr}"
-}
-
-# Create a route table
+# Create a route table & route VPC B -> VPC A
 resource "aws_route_table" "route-table-second" {
   provider = "aws.secondary"
   vpc_id   = "${module.second-vpc.vpc_id}"
 }
 
-# Create a route
 resource "aws_route" "route-second" {
   provider                  = "aws.secondary"
   route_table_id            = "${aws_route_table.route-table-second.id}"
-  destination_cidr_block    = "${data.aws_vpc_peering_connection.pcx-second.peer_cidr_block}"
-  vpc_peering_connection_id = "${data.aws_vpc_peering_connection.pcx-second.id}"
+  destination_cidr_block    = "${var.first_cidr}"
+  vpc_peering_connection_id = "${data.aws_vpc_peering_connection.pcx.id}"
 }
-*/
