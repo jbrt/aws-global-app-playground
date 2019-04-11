@@ -7,7 +7,7 @@ variable "first-region" {
 
 variable "second-region" {
   description = "Name of the second AWS region"
-  default     = "eu-west-3"
+  default     = "eu-west-2"
 }
 
 variable "project_name" {
@@ -44,7 +44,7 @@ variable "second_cidr" {
 
 variable "second_azs" {
   description = "List of AZs to use on the second region"
-  default     = ["eu-west-3a", "eu-west-3b", "eu-west-3c"]
+  default     = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
 }
 
 variable "second_public_subnets" {
