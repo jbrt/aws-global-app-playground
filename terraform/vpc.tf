@@ -65,6 +65,7 @@ resource "aws_vpc_peering_connection_accepter" "peer" {
 # Declare the data source
 data "aws_vpc_peering_connection" "pcx" {
   provider        = "aws.primary"
+  depends_on      = ["aws_vpc_peering_connection.peer", "aws_vpc_peering_connection_accepter.peer"]
   vpc_id          = "${module.first-vpc.vpc_id}"
   peer_cidr_block = "${var.second_cidr}"
 }
