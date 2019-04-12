@@ -5,7 +5,7 @@ resource "aws_dynamodb_table" "first-region-table" {
   depends_on = ["module.first-vpc"]
 
   hash_key         = "myAttribute"
-  name             = "myTable"
+  name             = "${var.first_table}"
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
   read_capacity    = 1
@@ -23,7 +23,7 @@ resource "aws_dynamodb_table" "second-region-table" {
   depends_on = ["module.second-vpc"]
 
   hash_key         = "myAttribute"
-  name             = "myTable"
+  name             = "${var.second_table}"
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
   read_capacity    = 1
@@ -36,11 +36,11 @@ resource "aws_dynamodb_table" "second-region-table" {
   tags = "${local.tags}"
 }
 
-resource "aws_dynamodb_global_table" "myTable" {
+resource "aws_dynamodb_global_table" "global-table" {
   depends_on = ["aws_dynamodb_table.first-region-table", "aws_dynamodb_table.second-region-table"]
   provider   = "aws.primary"
 
-  name = "myTable"
+  name = "${var.global_table}"
 
   replica {
     region_name = "${var.first-region}"

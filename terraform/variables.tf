@@ -15,6 +15,10 @@ variable "project_name" {
   default     = "global-playground"
 }
 
+###############
+# VPC variables
+###############
+
 variable "first_cidr" {
   description = "CIDR on the first region"
   default     = "10.1.0.0/16"
@@ -59,7 +63,28 @@ variable "second_database_subnets" {
   default = ["10.2.7.0/24", "10.2.8.0/24", "10.2.9.0/24"]
 }
 
+####################
+# DynamoDB variables
+####################
+
+variable "global_table" {
+  description = "Name of the Global DynamoDB table"
+  default     = "global-table"
+}
+
+variable "first_table" {
+  description = "Name of the DynamoDB table on first region"
+  default     = "first-table"
+}
+
+variable "second_table" {
+  description = "Name of the DynamoDB table on first region"
+  default     = "second-table"
+}
+
+#####################
 # Tags
+#####################
 
 locals {
   tags = {
