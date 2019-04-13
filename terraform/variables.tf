@@ -7,7 +7,7 @@ variable "first-region" {
 
 variable "second-region" {
   description = "Name of the second AWS region"
-  default     = "eu-west-2"
+  default     = "us-east-1"
 }
 
 variable "project_name" {
@@ -48,7 +48,7 @@ variable "second_cidr" {
 
 variable "second_azs" {
   description = "List of AZs to use on the second region"
-  default     = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
+  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
 variable "second_public_subnets" {
@@ -72,15 +72,25 @@ variable "global_table" {
   default     = "global-table"
 }
 
-variable "first_table" {
-  description = "Name of the DynamoDB table on first region"
-  default     = "first-table"
+##################
+# Aurora Global DB
+##################
+
+variable "db_instance" {
+  description = "For global DB instance on db.r3 and db.r4 are allowed"
+  default = "db.r3.large"
 }
 
-variable "second_table" {
-  description = "Name of the DynamoDB table on first region"
-  default     = "second-table"
+variable "db_username" {
+  description = "Default DB username"
+  default = "dbadmin"
 }
+
+variable "db_name" {
+  description = "Name of the Global DB"
+  default = "globaldb"
+}
+
 
 #####################
 # Tags
