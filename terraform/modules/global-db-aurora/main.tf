@@ -20,7 +20,7 @@ resource "aws_db_subnet_group" "primary_subnet_group" {
   provider    = "aws.primary"
   name        = "${var.db_name}_subnet_group"
   description = "Allowed subnets for Aurora DB cluster instances"
-  subnet_ids  = ["${module.first-vpc.database_subnets}"]
+  subnet_ids  = ["${var.first_db_subnets}"]
   tags        = "${local.tags}"
 }
 
@@ -39,7 +39,7 @@ resource "aws_rds_cluster" "primary" {
 
 resource "aws_rds_cluster_instance" "primary" {
   provider             = "aws.primary"
-  instance_class       = "db.r3.large"
+  instance_class       = "${var.db_instance}"
   db_subnet_group_name = "${aws_db_subnet_group.primary_subnet_group.name}"
   cluster_identifier   = "${aws_rds_cluster.primary.id}"
   tags                 = "${local.tags}"
@@ -51,7 +51,7 @@ resource "aws_db_subnet_group" "secondary_subnet_group" {
   provider    = "aws.secondary"
   name        = "${var.db_name}_subnet_group"
   description = "Allowed subnets for Aurora DB cluster instances"
-  subnet_ids  = ["${module.second-vpc.database_subnets}"]
+  subnet_ids  = ["${var.second_db_subnets}"]
   tags        = "${local.tags}"
 }
 
@@ -68,12 +68,9 @@ resource "aws_rds_cluster" "secondary" {
 
 resource "aws_rds_cluster_instance" "secondary" {
   provider             = "aws.secondary"
-  instance_class       = "db.r3.large"
+  depends_on           = ["aws_rds_cluster_instance.primary", "aws_rds_global_cluster.global_db"]
+  instance_class       = "${var.db_instance}"
   db_subnet_group_name = "${aws_db_subnet_group.secondary_subnet_group.name}"
   cluster_identifier   = "${aws_rds_cluster.secondary.id}"
   tags                 = "${local.tags}"
-}
-
-output "db_password" {
-  value = "${random_string.password.result}"
 }
