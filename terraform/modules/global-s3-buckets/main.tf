@@ -151,7 +151,6 @@ resource "aws_iam_policy_attachment" "replication-tgt" {
   policy_arn = "${aws_iam_policy.replication-tgt-to-src.arn}"
 }
 
-
 #########################
 # S3 Buckets
 #########################
@@ -160,7 +159,7 @@ resource "aws_iam_policy_attachment" "replication-tgt" {
 resource "aws_s3_bucket" "destination" {
   provider = "aws.secondary"
   bucket   = "${var.s3_second_bucket}"
-  region   = "${var.second-region}"
+  region   = "${var.second_region}"
   tags     = "${local.tags}"
 
   versioning {
@@ -187,7 +186,7 @@ resource "aws_s3_bucket" "bucket" {
   provider = "aws.primary"
   bucket   = "${var.s3_first_bucket}"
   acl      = "private"
-  region   = "${var.first-region}"
+  region   = "${var.first_region}"
   tags     = "${local.tags}"
 
   versioning {
