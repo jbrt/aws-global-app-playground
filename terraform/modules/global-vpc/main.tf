@@ -46,7 +46,7 @@ resource "aws_vpc_peering_connection" "peer" {
   provider    = "aws.primary"
   peer_vpc_id = "${module.second-vpc.vpc_id}"
   vpc_id      = "${module.first-vpc.vpc_id}"
-  peer_region = "${var.second-region}"
+  peer_region = "${var.second_region}"
 }
 
 # Accepter's side of the connection.
