@@ -10,6 +10,8 @@ variable "second-region" {
   default     = "us-east-1"
 }
 
+/*
+
 variable "project_name" {
   description = "General identifier for created resources"
   default     = "global-playground"
@@ -115,3 +117,4 @@ locals {
     Terraform = true
   }
 }
+*/
