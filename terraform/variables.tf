@@ -78,19 +78,32 @@ variable "global_table" {
 
 variable "db_instance" {
   description = "For global DB instance on db.r3 and db.r4 are allowed"
-  default = "db.r3.large"
+  default     = "db.r3.large"
 }
 
 variable "db_username" {
   description = "Default DB username"
-  default = "dbadmin"
+  default     = "dbadmin"
 }
 
 variable "db_name" {
   description = "Name of the Global DB"
-  default = "globaldb"
+  default     = "globaldb"
 }
 
+################
+# S3 Buckets
+################
+
+variable "s3_first_bucket" {
+  description = "Name of the bucket on the first region"
+  default     = "global-playground-first-region"
+}
+
+variable "s3_second_bucket" {
+  description = "Name of the bucket on the second region"
+  default     = "global-playground-second-region"
+}
 
 #####################
 # Tags
