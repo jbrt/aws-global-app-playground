@@ -1,9 +1,7 @@
 # Creating a DynamoDB Global table
 
 resource "aws_dynamodb_table" "first-region-table" {
-  provider = "aws.primary"
-  depends_on = ["module.first-vpc"]
-
+  provider         = "aws.primary"
   hash_key         = "myAttribute"
   name             = "${var.global_table}"
   stream_enabled   = true
@@ -15,13 +13,12 @@ resource "aws_dynamodb_table" "first-region-table" {
     name = "myAttribute"
     type = "S"
   }
+
   tags = "${local.tags}"
 }
 
 resource "aws_dynamodb_table" "second-region-table" {
-  provider = "aws.secondary"
-  depends_on = ["module.second-vpc"]
-
+  provider         = "aws.secondary"
   hash_key         = "myAttribute"
   name             = "${var.global_table}"
   stream_enabled   = true
@@ -33,6 +30,7 @@ resource "aws_dynamodb_table" "second-region-table" {
     name = "myAttribute"
     type = "S"
   }
+
   tags = "${local.tags}"
 }
 
@@ -43,10 +41,10 @@ resource "aws_dynamodb_global_table" "global-table" {
   name = "${var.global_table}"
 
   replica {
-    region_name = "${var.first-region}"
+    region_name = "${var.first_region}"
   }
 
   replica {
-    region_name = "${var.second-region}"
+    region_name = "${var.second_region}"
   }
 }
