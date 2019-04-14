@@ -1,6 +1,6 @@
 # AWS Global application playbground 
 
-Templates for experimenting global (multi-region) deployments on AWS.
+Template providing building blocks for global application testing (as demo purpose).
 
 ## Purpose of that repository 
 
@@ -10,7 +10,6 @@ This repository will contains templates for experimenting global deployment on A
 - Aurora MySQL Global instances
 - DynamoDB Global tables
 - S3 Buckets with replication
-- Route53 cross-region routing policies
 
 ## Architecture schema
 
