@@ -13,7 +13,7 @@ module "first-vpc" {
   enable_dns_hostnames = true
   enable_nat_gateway   = true
   single_nat_gateway   = true
-  tags                 = "${local.tags}"
+  tags                 = "${var.tags}"
 
   providers = {
     "aws" = "aws.primary"
@@ -33,7 +33,7 @@ module "second-vpc" {
   enable_dns_hostnames = true
   enable_nat_gateway   = true
   single_nat_gateway   = true
-  tags                 = "${local.tags}"
+  tags                 = "${var.tags}"
 
   providers = {
     "aws" = "aws.secondary"

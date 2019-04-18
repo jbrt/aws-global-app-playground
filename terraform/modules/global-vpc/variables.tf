@@ -85,9 +85,8 @@ variable "second_database_subnets" {
 # Tags
 #####################
 
-locals {
-  tags = {
-    Project   = "Global App PlayGround"
-    Terraform = true
-  }
+variable "tags" {
+  description = "Dictionary of tags"
+  type        = "map"
+  default     = {}
 }

@@ -14,7 +14,7 @@ resource "aws_dynamodb_table" "first-region-table" {
     type = "S"
   }
 
-  tags = "${local.tags}"
+  tags = "${var.tags}"
 }
 
 resource "aws_dynamodb_table" "second-region-table" {
@@ -31,7 +31,7 @@ resource "aws_dynamodb_table" "second-region-table" {
     type = "S"
   }
 
-  tags = "${local.tags}"
+  tags = "${var.tags}"
 }
 
 resource "aws_dynamodb_global_table" "global-table" {

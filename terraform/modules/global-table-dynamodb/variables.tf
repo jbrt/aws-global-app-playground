@@ -37,9 +37,8 @@ variable "global_table" {
 # Tags
 #####################
 
-locals {
-  tags = {
-    Project   = "Global App PlayGround"
-    Terraform = true
-  }
+variable "tags" {
+  description = "Dictionary of tags"
+  type        = "map"
+  default     = {}
 }

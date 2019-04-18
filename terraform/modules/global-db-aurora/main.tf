@@ -21,7 +21,7 @@ resource "aws_db_subnet_group" "primary_subnet_group" {
   name        = "${var.db_name}_subnet_group"
   description = "Allowed subnets for Aurora DB cluster instances"
   subnet_ids  = ["${var.first_db_subnets}"]
-  tags        = "${local.tags}"
+  tags        = "${var.tags}"
 }
 
 resource "aws_rds_cluster" "primary" {
@@ -34,7 +34,7 @@ resource "aws_rds_cluster" "primary" {
   global_cluster_identifier = "${aws_rds_global_cluster.global_db.id}"
   db_subnet_group_name      = "${aws_db_subnet_group.primary_subnet_group.name}"
   skip_final_snapshot       = true
-  tags                      = "${local.tags}"
+  tags                      = "${var.tags}"
 }
 
 resource "aws_rds_cluster_instance" "primary" {
@@ -42,7 +42,7 @@ resource "aws_rds_cluster_instance" "primary" {
   instance_class       = "${var.db_instance}"
   db_subnet_group_name = "${aws_db_subnet_group.primary_subnet_group.name}"
   cluster_identifier   = "${aws_rds_cluster.primary.id}"
-  tags                 = "${local.tags}"
+  tags                 = "${var.tags}"
 }
 
 # Create the DB instance on the second region
@@ -52,7 +52,7 @@ resource "aws_db_subnet_group" "secondary_subnet_group" {
   name        = "${var.db_name}_subnet_group"
   description = "Allowed subnets for Aurora DB cluster instances"
   subnet_ids  = ["${var.second_db_subnets}"]
-  tags        = "${local.tags}"
+  tags        = "${var.tags}"
 }
 
 resource "aws_rds_cluster" "secondary" {
@@ -63,7 +63,7 @@ resource "aws_rds_cluster" "secondary" {
   global_cluster_identifier = "${aws_rds_global_cluster.global_db.id}"
   db_subnet_group_name      = "${aws_db_subnet_group.secondary_subnet_group.name}"
   skip_final_snapshot       = true
-  tags                      = "${local.tags}"
+  tags                      = "${var.tags}"
 }
 
 resource "aws_rds_cluster_instance" "secondary" {
@@ -72,5 +72,5 @@ resource "aws_rds_cluster_instance" "secondary" {
   instance_class       = "${var.db_instance}"
   db_subnet_group_name = "${aws_db_subnet_group.secondary_subnet_group.name}"
   cluster_identifier   = "${aws_rds_cluster.secondary.id}"
-  tags                 = "${local.tags}"
+  tags                 = "${var.tags}"
 }

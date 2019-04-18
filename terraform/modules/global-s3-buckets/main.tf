@@ -160,7 +160,7 @@ resource "aws_s3_bucket" "destination" {
   provider = "aws.secondary"
   bucket   = "${var.s3_second_bucket}"
   region   = "${var.second_region}"
-  tags     = "${local.tags}"
+  tags     = "${var.tags}"
 
   versioning {
     enabled = true
@@ -187,7 +187,7 @@ resource "aws_s3_bucket" "bucket" {
   bucket   = "${var.s3_first_bucket}"
   acl      = "private"
   region   = "${var.first_region}"
-  tags     = "${local.tags}"
+  tags     = "${var.tags}"
 
   versioning {
     enabled = true

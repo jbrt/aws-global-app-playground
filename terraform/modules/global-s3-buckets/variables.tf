@@ -46,9 +46,8 @@ variable "s3_second_bucket" {
 # Tags
 #####################
 
-locals {
-  tags = {
-    Project   = "Global App PlayGround"
-    Terraform = true
-  }
+variable "tags" {
+  description = "Dictionary of tags"
+  type        = "map"
+  default     = {}
 }
