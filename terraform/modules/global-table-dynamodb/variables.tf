@@ -40,12 +40,10 @@ variable "table_schema" {
 
 variable "read_capacity" {
   description = "Read capacity for tables"
-  type        = "number"
 }
 
 variable "write_capacity" {
   description = "Write capacity for tables"
-  type        = "number"
 }
 
 #####################
