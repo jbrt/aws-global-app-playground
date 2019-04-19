@@ -33,6 +33,21 @@ variable "global_table" {
   default     = "global-table"
 }
 
+variable "table_schema" {
+  description = "A list of attributes that describe the schema table"
+  type        = "list"
+}
+
+variable "read_capacity" {
+  description = "Read capacity for tables"
+  type        = "number"
+}
+
+variable "write_capacity" {
+  description = "Write capacity for tables"
+  type        = "number"
+}
+
 #####################
 # Tags
 #####################

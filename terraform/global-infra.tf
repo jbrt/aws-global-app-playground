@@ -22,11 +22,20 @@ module "buckets-replicated" {
 }
 
 module "dynamodb-global-table" {
-  source        = "./modules/global-table-dynamodb"
-  first_region  = "eu-west-1"
-  second_region = "us-east-1"
-  global_table  = "global-table"
-  tags          = "${local.tags}"
+  source         = "./modules/global-table-dynamodb"
+  first_region   = "eu-west-1"
+  second_region  = "us-east-1"
+  global_table   = "global-table"
+  read_capacity  = 1
+  write_capacity = 1
+  tags           = "${local.tags}"
+
+  table_schema = [
+    {
+      name = "myAttribute"
+      type = "S"
+    },
+  ]
 }
 
 module "aurora-globalDB" {

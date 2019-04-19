@@ -6,15 +6,10 @@ resource "aws_dynamodb_table" "first-region-table" {
   name             = "${var.global_table}"
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
-  read_capacity    = 1
-  write_capacity   = 1
-
-  attribute {
-    name = "myAttribute"
-    type = "S"
-  }
-
-  tags = "${var.tags}"
+  read_capacity    = "${var.read_capacity}"
+  write_capacity   = "${var.write_capacity}"
+  attribute        = "${var.table_schema}"
+  tags             = "${var.tags}"
 }
 
 resource "aws_dynamodb_table" "second-region-table" {
@@ -23,15 +18,10 @@ resource "aws_dynamodb_table" "second-region-table" {
   name             = "${var.global_table}"
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
-  read_capacity    = 1
-  write_capacity   = 1
-
-  attribute {
-    name = "myAttribute"
-    type = "S"
-  }
-
-  tags = "${var.tags}"
+  read_capacity    = "${var.read_capacity}"
+  write_capacity   = "${var.write_capacity}"
+  attribute        = "${var.table_schema}"
+  tags             = "${var.tags}"
 }
 
 resource "aws_dynamodb_global_table" "global-table" {
