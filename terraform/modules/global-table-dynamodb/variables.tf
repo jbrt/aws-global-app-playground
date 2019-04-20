@@ -38,6 +38,10 @@ variable "table_schema" {
   type        = "list"
 }
 
+variable "hash_key" {
+  description = "The Hash key for each table"
+}
+
 variable "read_capacity" {
   description = "Read capacity for tables"
 }
