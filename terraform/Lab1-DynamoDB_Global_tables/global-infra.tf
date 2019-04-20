@@ -1,6 +1,6 @@
 # Create a Global VPC structure
 # By default, all goes into eu-west-1 & us-east-1
-
+/*
 module "global-vpc" {
   source        = "./modules/global-vpc"
   project_name  = "global-playground"
@@ -20,24 +20,26 @@ module "buckets-replicated" {
   s3_second_bucket = "global-playground-second-region"
   tags             = "${local.tags}"
 }
-
+*/
 module "dynamodb-global-table" {
-  source         = "./modules/global-table-dynamodb"
+  source         = "../modules/global-table-dynamodb"
   first_region   = "eu-west-1"
   second_region  = "us-east-1"
   global_table   = "global-table"
+  hash_key       = "id"
   read_capacity  = 1
   write_capacity = 1
   tags           = "${local.tags}"
 
   table_schema = [
     {
-      name = "myAttribute"
-      type = "S"
+      name = "id"
+      type = "N"
     },
   ]
 }
 
+/*
 module "aurora-globalDB" {
   source            = "./modules/global-db-aurora"
   first_region      = "eu-west-1"
@@ -49,3 +51,5 @@ module "aurora-globalDB" {
   db_username       = "dbadmin"
   db_name           = "globaldb"
 }
+*/
+

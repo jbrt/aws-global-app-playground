@@ -2,12 +2,12 @@
 # Region variables 
 ####################
 
-variable "first-region" {
+variable "first_region" {
   description = "Name of the first AWS region"
   default     = "eu-west-1"
 }
 
-variable "second-region" {
+variable "second_region" {
   description = "Name of the second AWS region"
   default     = "us-east-1"
 }
