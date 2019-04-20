@@ -113,3 +113,7 @@ venv.bak/
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+# Zip files (from Lambda functions)
+
+*.zip
