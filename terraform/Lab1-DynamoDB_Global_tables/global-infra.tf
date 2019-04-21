@@ -39,6 +39,30 @@ module "dynamodb-global-table" {
   ]
 }
 
+module "lambda-functions_region1" {
+  source          = "./lambda"
+  region_provider = "${var.first_region}"
+}
+
+module "lambda-functions_region2" {
+  source          = "./lambda"
+  region_provider = "${var.second_region}"
+}
+
+module "api-gateway_region1" {
+  source               = "./api-gateway"
+  lambda_filler        = "${module.lambda-functions_region1.filler_arn}"
+  lambda_filler_invoke = "${module.lambda-functions_region1.filler_invoke_arn}"
+  region_provider      = "${var.first_region}"
+}
+
+module "api-gateway_region2" {
+  source               = "./api-gateway"
+  lambda_filler        = "${module.lambda-functions_region2.filler_arn}"
+  lambda_filler_invoke = "${module.lambda-functions_region2.filler_invoke_arn}"
+  region_provider      = "${var.second_region}"
+}
+
 /*
 module "aurora-globalDB" {
   source            = "./modules/global-db-aurora"
