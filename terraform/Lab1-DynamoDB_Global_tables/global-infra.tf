@@ -51,14 +51,14 @@ module "lambda-functions_region2" {
 
 module "api-gateway_region1" {
   source               = "./api-gateway"
-  lambda_filler        = "${module.lambda-functions_region1.filler_arn}"
+  lambda_name          = "${module.lambda-functions_region1.filler_name}"
   lambda_filler_invoke = "${module.lambda-functions_region1.filler_invoke_arn}"
   region_provider      = "${var.first_region}"
 }
 
 module "api-gateway_region2" {
   source               = "./api-gateway"
-  lambda_filler        = "${module.lambda-functions_region2.filler_arn}"
+  lambda_name          = "${module.lambda-functions_region2.filler_name}"
   lambda_filler_invoke = "${module.lambda-functions_region2.filler_invoke_arn}"
   region_provider      = "${var.second_region}"
 }
