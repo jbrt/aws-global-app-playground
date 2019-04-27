@@ -54,7 +54,7 @@ resource "aws_lambda_permission" "apigw" {
   action        = "lambda:InvokeFunction"
   function_name = "${var.lambda_name}"
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_deployment.lambda.execution_arn}"
+  source_arn    = "${aws_api_gateway_rest_api.api-lambda-dynamodb.execution_arn}*/*"
 }
 
 resource "aws_api_gateway_method_response" "200" {
