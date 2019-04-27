@@ -16,6 +16,14 @@ terraform {
   required_version = "<= 0.11.13"
 }
 
+############
+# DNS Domain
+############
+
+variable "dns_domain" {
+  description = "Name of an existing DNS ROUTE53 zone where create the API RR"
+}
+
 #####################
 # Tags
 #####################
