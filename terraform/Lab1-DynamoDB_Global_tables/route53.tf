@@ -37,3 +37,9 @@ resource "aws_route53_record" "api-region2" {
   set_identifier = "region2"
   records        = ["${module.api-gateway_region2.api-gateway_url}"]
 }
+
+# Print as ouput the API URL
+
+output "api_url" {
+  value = "api.${var.dns_domain}"
+}
