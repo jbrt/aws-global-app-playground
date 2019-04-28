@@ -1,4 +1,4 @@
-# Lab1 - DynamoDB global tables (accessed through API GateWay & Lambda)
+# Lab1 - DynamoDB global tables
 
 Playing with DynamoDB global tables, API Gateway and Lambda functions.
 
@@ -26,6 +26,8 @@ from where data has been read.
 
 ## Deployment
 
+Note: during the plan & apply steps, your Route53 registered domain will be asked.
+
 ```bash
 $ terraform init
 $ terraform plan
@@ -48,7 +50,7 @@ $ curl -X POST --data '{"first_name":"James", "last_name":"Bond"}' https://api.<
 {"statusCode": 200, "insert_from": "eu-west-1", "text": "Successfully insert James Bond"}
 ```
 
-The user James has been added from the eu-west-1 region. Here is state of DynamoDB after this insert:
+The user James **has been added from the eu-west-1 region**. Here is state of DynamoDB after this insert:
 
 ![DynamoDB](../../images/DynamoDB-Lab1.png)
 
@@ -60,5 +62,5 @@ $ curl https://api.<YOUR-DOMAIN>/testing/users
 {"statusCode": 200, "read_from": "us-east-1", "body": [{"aws:rep:deleting": false, "last_name": "Bond", "first_name": "James", "uuid": "738ec6ee-b463-4ea2-bfda-b076b517d86d", "insert_from": "eu-west-1", "aws:rep:updateregion": "eu-west-1", "aws:rep:updatetime": 1556458211.781001, "id": 1556458210.0}]}
 ````
 
-Here, you can see that the data has been readed from the second region (and, 
+Here, you can see that the data has been readed **from the second region** (and, 
 obviously, data has been replicated in the meanwhile).
